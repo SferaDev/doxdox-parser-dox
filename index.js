@@ -59,22 +59,22 @@ const parser = (content, filename) =>
         .map(method => ({
             'uid': formatStringForUID(`${filename}-${method.ctx.string}`),
             'isPrivate': method.isPrivate,
+            'isClass': method.isClass,
+            'isConstructor': method.isConstructor,
             'type': method.ctx.type,
             'name': formatStringForName(method.ctx.string),
-            'description': method.description.full,
+            'description': method.description.full.replace(/\n/g, '<br/>'),
             'empty': !method.description.full && !method.tags.length,
+            'code': method.code,
+            'commentLine': method.line,
+            'codeLine': method.codeStart,
             'params': method.tags.filter(tag =>
                 tag.type === 'param' && !tag.name.match(/\./))
                 .map(tag => {
-
                     if (tag.optional) {
-
                         return `[${formatStringForParam(tag.name)}]`;
-
                     }
-
                     return formatStringForParam(tag.name);
-
                 })
                 .join(', ')
                 .replace(/\], \[/g, ', ')
