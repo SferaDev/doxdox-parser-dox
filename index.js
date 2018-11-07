@@ -63,7 +63,7 @@ const parser = (content, filename) =>
             'isConstructor': method.isConstructor,
             'type': method.ctx.type,
             'name': formatStringForName(method.ctx.string),
-            'description': method.description.full.replace('\n', '  \n'),
+            'description': method.description.full.replace('\n', '<br/>\n'),
             'empty': !method.description.full && !method.tags.length,
             'code': method.code,
             'commentLine': method.line,
