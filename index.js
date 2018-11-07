@@ -63,7 +63,7 @@ const parser = (content, filename) =>
             'isConstructor': method.isConstructor,
             'type': method.ctx.type,
             'name': formatStringForName(method.ctx.string),
-            'description': method.description.full,
+            'description': method.description.full.replace('\n', '  \n'),
             'empty': !method.description.full && !method.tags.length,
             'code': method.code,
             'commentLine': method.line,
@@ -71,15 +71,10 @@ const parser = (content, filename) =>
             'params': method.tags.filter(tag =>
                 tag.type === 'param' && !tag.name.match(/\./))
                 .map(tag => {
-
                     if (tag.optional) {
-
                         return `[${formatStringForParam(tag.name)}]`;
-
                     }
-
                     return formatStringForParam(tag.name);
-
                 })
                 .join(', ')
                 .replace(/\], \[/g, ', ')
